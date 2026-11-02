@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "env": {
+      "python": "3.14.4",
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0",
+      "cudnn": 92400,
+      "gpu": "NVIDIA GeForce RTX 3050",
+      "gpu_mem_GB": 7.7,
+      "transformers": "5.22.1"
+    },
+    "args": {
+      "segformer": "/home/magic/work_task/cv-segmentation-study/07-08_segformer_profiling/weights/segformer-b0-camvid",
+      "deeplab_repo": "/home/magic/work_task/cv-segmentation-study/03-04_deeplab_finetune_pruning",
+      "deeplab_ckpt": "/home/magic/work_task/cv-segmentation-study/03-04_deeplab_finetune_pruning/runs/full_ce_lovasz_e50/best.pt",
+      "models": "['deeplab']",
+      "sizes": "['360x480']",
+      "variants": "['fp32', 'fp16', 'half', 'fp16+compile']",
+      "batch": "8",
+      "warmup": "30",
+      "iters": "200",
+      "miou": "True",
+      "split": "test",
+      "tag": "summary_deeplab"
+    },
+    "notes": "latency: batch 1, median over iters runs after warmup, CUDA events + synchronize on every iteration; memory: peak allocated increase per forward (activations and temporary buffers), weights reported separately; not measurable with CUDA Graphs"
+  },
+  "rows": [
+    {
+      "model": "DeepLabV3-ResNet50",
+      "input": "360x480",
+      "variant": "fp32",
+      "variant_info": "fp32, PyTorch defaults (cuDNN convolutions in TF32, matmul in fp32)",
+      "params_M": 39.636299,
+      "gmacs": 107.821503488,
+      "weights_MB": 151.4172477722168,
+      "miou": 0.6951971790532259,
+      "iou_per_class": [
+        0.9018010244390269,
+        0.8370079651112209,
+        0.26915838288232463,
+        0.9542630805043792,
+        0.847087393006626,
+        0.7611647110211014,
+        0.5010529127968193,
+        0.3953888484569911,
+        0.8971828081051433,
+        0.5987944373249798,
+        0.6842674059368723
+      ],
+      "pixel_acc": 0.9183759236449623,
+      "latency_b1": {
+        "median_ms": 38.01796913146973,
+        "p90_ms": 38.534233474731444,
+        "min_ms": 37.94636917114258,
+        "std_ms": 0.33089136160289845
+      },
+      "memory_b1_MB": 77.0283203125,
+      "throughput_fps": 27.72878379090114,
+      "memory_b8_MB": 590.625,
+      "speedup": 1.0,
+      "delta_miou": 0.0
+    },
+    {
+      "model": "DeepLabV3-ResNet50",
+      "input": "360x480",
+      "variant": "fp16",
+      "variant_info": "torch.autocast(float16), fp32 weights",
+      "params_M": 39.636299,
+      "gmacs": 107.821503488,
+      "weights_MB": 151.4172477722168,
+      "miou": 0.6951595942927813,
+      "iou_per_class": [
+        0.9017725146963913,
+        0.8370029399673222,
+        0.26919440569116004,
+        0.954258820848294,
+        0.8470691318518284,
+        0.7611428054577554,
+        0.5009880141896909,
+        0.39528611145690695,
+        0.8971368690872007,
+        0.5987743854872055,
+        0.6841295384868382
+      ],
+      "pixel_acc": 0.9183670649489888,
+      "latency_b1": {
+        "median_ms": 21.822463989257812,
+        "p90_ms": 21.831897735595703,
+        "min_ms": 21.796831130981445,
+        "std_ms": 0.007917517314961518
+      },
+      "memory_b1_MB": 45.86767578125,
+      "throughput_fps": 54.00304848263432,
+      "memory_b8_MB": 318.28125,
+      "speedup": 1.742148327071783,
+      "delta_miou": -3.7584760444575593e-05
+    },
+    {
+      "model": "DeepLabV3-ResNet50",
+      "input": "360x480",
+      "variant": "half",
+      "variant_info": "model.half(): fp16 weights and activations",
+      "params_M": 39.636299,
+      "gmacs": 107.821503488,
+      "weights_MB": 75.70885276794434,
+      "miou": 0.6951398658282614,
+      "iou_per_class": [
+        0.9017856046605658,
+        0.8370227104372057,
+        0.26915231465397316,
+        0.9542525383082507,
+        0.8470415434957754,
+        0.7611531536092541,
+        0.500985143292677,
+        0.39530859664945367,
+        0.8971634342936801,
+        0.5986459516445193,
+        0.6840275330655202
+      ],
+      "pixel_acc": 0.9183722820235855,
+      "latency_b1": {
+        "median_ms": 20.725743293762207,
+        "p90_ms": 20.73730010986328,
+        "min_ms": 20.70195198059082,
+        "std_ms": 0.010085585732694262
+      },
+      "memory_b1_MB": 38.3359375,
+      "throughput_fps": 54.675192846519884,
+      "memory_b8_MB": 295.328125,
+      "speedup": 1.8343356179130104,
+      "delta_miou": -5.731322496449476e-05
+    },
+    {
+      "model": "DeepLabV3-ResNet50",
+      "input": "360x480",
+      "variant": "fp16+compile",
+      "variant_info": "autocast(float16) + torch.compile(mode='reduce-overhead', CUDA Graphs)",
+      "params_M": 39.636299,
+      "gmacs": 107.821503488,
+      "weights_MB": 151.4172477722168,
+      "miou": 0.6951751562306131,
+      "iou_per_class": [
+        0.9017865421604842,
+        0.8370121334461584,
+        0.26917837346922596,
+        0.9542569134063769,
+        0.8470624124980364,
+        0.7611482684387538,
+        0.5010313652919058,
+        0.39533506664304513,
+        0.8971221189506632,
+        0.5987891803385668,
+        0.6842043438935288
+      ],
+      "pixel_acc": 0.9183721787151776,
+      "latency_b1": {
+        "median_ms": 15.820799827575684,
+        "p90_ms": 16.047411155700683,
+        "min_ms": 15.652864456176758,
+        "std_ms": 0.1267063307595634
+      },
+      "memory_b1_MB": null,
+      "throughput_fps": 64.97798981641338,
+      "memory_b8_MB": null,
+      "speedup": 2.4030371122706664,
+      "delta_miou": -2.2022822612766113e-05
+    }
+  ]
+}

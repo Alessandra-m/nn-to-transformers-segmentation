@@ -1,0 +1,17 @@
+test: 233 images loaded in 2 s
+environment: {"python": "3.14.4", "torch": "2.14.1+cu130", "cuda": "13.0", "cudnn": 92400, "gpu": "NVIDIA GeForce RTX 3050", "gpu_mem_GB": 7.7, "transformers": "5.22.1"}
+
+[DeepLabV3-ResNet50 360x480] preprocessed 233 images in 0 s
+  fp32          lat   38.02 ms (p90 38.53) | 27.7 fps b=8 | mem 77 MB | mIoU 0.6952
+  fp16          lat   21.82 ms (p90 21.83) | 54.0 fps b=8 | mem 46 MB | mIoU 0.6952
+  half          lat   20.73 ms (p90 20.74) | 54.7 fps b=8 | mem 38 MB | mIoU 0.6951
+  fp16+compile  lat   15.82 ms (p90 16.05) | 65.0 fps b=8 | mem — MB | mIoU 0.6952
+
+| Model | Input | Variant | mIoU test | Δ mIoU | Latency b=1, ms (median / p90) | Speedup | FPS, b=8 | Memory b=1, MB (weights + activations) | Params, M | GMACs |
+|---|---|---|---|---|---|---|---|---|---|---|
+| DeepLabV3-ResNet50 | 360x480 | fp32 | 0.6952 | +0.0000 | 38.02 / 38.53 | ×1.00 | 27.7 | 228 (151 + 77) | 39.64 | 107.8 |
+| DeepLabV3-ResNet50 | 360x480 | fp16 | 0.6952 | -0.0000 | 21.82 / 21.83 | ×1.74 | 54.0 | 197 (151 + 46) | 39.64 | 107.8 |
+| DeepLabV3-ResNet50 | 360x480 | half | 0.6951 | -0.0001 | 20.73 / 20.74 | ×1.83 | 54.7 | 114 (76 + 38) | 39.64 | 107.8 |
+| DeepLabV3-ResNet50 | 360x480 | fp16+compile | 0.6952 | -0.0000 | 15.82 / 16.05 | ×2.40 | 65.0 | — | 39.64 | 107.8 |
+
+Saved: /home/magic/work_task/cv-segmentation-study/07-08_segformer_profiling/results/perf/summary_deeplab.json, /home/magic/work_task/cv-segmentation-study/07-08_segformer_profiling/results/perf/summary_deeplab.md

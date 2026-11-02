@@ -1,0 +1,18 @@
+W1102 14:19:47.103000 82258 torch/_inductor/utils.py:1806] [0/0] Not enough SMs to use max_autotune_gemm mode
+test: 233 images loaded in 2 s
+environment: {"python": "3.14.4", "torch": "2.14.1+cu130", "cuda": "13.0", "cudnn": 92400, "gpu": "NVIDIA GeForce RTX 3050", "gpu_mem_GB": 7.7, "transformers": "5.22.1"}
+
+[DeepLabV3-ResNet50 360x480] preprocessed 233 images in 0 s
+  fp32          lat   13.80 ms (p90 13.81) | 81.8 fps b=8 | mem 37 MB | mIoU 0.0742
+  fp16          lat    8.34 ms (p90 8.36) | 147.7 fps b=8 | mem 20 MB | mIoU 0.0742
+  half          lat    7.86 ms (p90 7.87) | 150.4 fps b=8 | mem 18 MB | mIoU 0.0744
+  fp16+compile  lat    5.14 ms (p90 5.15) | 194.6 fps b=8 | mem — MB | mIoU 0.0742
+
+| Model | Input | Variant | mIoU test | Δ mIoU | Latency b=1, ms (median / p90) | Speedup | FPS, b=8 | Memory b=1, MB (weights + activations) | Params, M | GMACs |
+|---|---|---|---|---|---|---|---|---|---|---|
+| DeepLabV3-ResNet50 | 360x480 | fp32 | 0.0742 | +0.0000 | 13.80 / 13.81 | ×1.00 | 81.8 | 75 (38 + 37) | 9.93 | 27.1 |
+| DeepLabV3-ResNet50 | 360x480 | fp16 | 0.0742 | -0.0000 | 8.34 / 8.36 | ×1.65 | 147.7 | 58 (38 + 20) | 9.93 | 27.1 |
+| DeepLabV3-ResNet50 | 360x480 | half | 0.0744 | +0.0002 | 7.86 / 7.87 | ×1.76 | 150.4 | 37 (19 + 18) | 9.93 | 27.1 |
+| DeepLabV3-ResNet50 | 360x480 | fp16+compile | 0.0742 | -0.0000 | 5.14 / 5.15 | ×2.68 | 194.6 | — | 9.93 | 27.1 |
+
+Saved: /home/magic/work_task/cv-segmentation-study/07-08_segformer_profiling/results/perf/summary_deeplab_r0.5_pruned.json, /home/magic/work_task/cv-segmentation-study/07-08_segformer_profiling/results/perf/summary_deeplab_r0.5_pruned.md
