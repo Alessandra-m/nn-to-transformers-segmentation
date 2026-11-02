@@ -7,16 +7,19 @@
 
 ## Подзадачи
 
-| # | Тема | Материал | Папка | Отчёт | Главный результат |
+| # | Тема | Конспект статьи | Папка | Отчёт | Главный результат |
 |---|---|---|---|---|---|
-| 1 | FCN | Long et al., 2015 | [01_fcn](01_fcn/) | [README](01_fcn/README.md) | FCN и FCN-skip на PyTorch, размеры тензоров для двух входов, выход `[B, C, H, W]` |
-| 2 | U-Net | Ronneberger et al., 2015 | [02_unet](02_unet/) | [README](02_unet/README.md) | компактная U-Net (482 тыс. параметров), переобучение до IoU 1.00 на train |
-| 3 | Дообучение | D2L, Fine-Tuning | [03-04_deeplab_finetune_pruning](03-04_deeplab_finetune_pruning/) | [REPORT_Fine-Tuning](03-04_deeplab_finetune_pruning/reports/REPORT_Fine-Tuning.md) | DeepLabV3-R50: голова 0.596 → вся модель 0.685 → CE + Lovász **0.695** mIoU test |
-| 4 | Прунинг | DepGraph, Torch-Pruning | там же | [REPORT_Pruning](03-04_deeplab_finetune_pruning/reports/REPORT_Pruning.md) | r = 0.3: ×1.7 быстрее при −0.014 mIoU; r = 0.5: ×2.8 при −0.038 |
-| 5 | Transformer encoder | Vaswani et al., 2017 | [05-06_transformer_vit](05-06_transformer_vit/) | [transformer_encoder](05-06_transformer_vit/report/transformer_encoder.md) | attention, совпадающий со встроенным, encoder-блок, стоимость O(N²) |
-| 6 | ViT | Dosovitskiy et al., 2020 | там же | [vit](05-06_transformer_vit/report/vit.md) | patch embedding, учебный ViT, предобученный ViT-B/16, число токенов |
-| 7 | SegFormer | Xie et al., 2021 | [07-08_segformer_profiling](07-08_segformer_profiling/) | [README](07-08_segformer_profiling/README.md) | SegFormer-B0: **0.691** mIoU test при 3.7 млн параметров (в 10.7 раза меньше DeepLabV3) |
-| 8 | Профилирование и оптимизация | PyTorch Profiler | там же | [PROFILING](07-08_segformer_profiling/PROFILING.md) | `fp16+compile`: SegFormer ×2.1, DeepLabV3 ×2.4 без потери mIoU |
+| 1 | FCN | [Long et al., 2015](papers/01_fcn.md) | [01_fcn](01_fcn/) | [README](01_fcn/README.md) | FCN и FCN-skip на PyTorch, размеры тензоров для двух входов, выход `[B, C, H, W]` |
+| 2 | U-Net | [Ronneberger et al., 2015](papers/02_unet.md) | [02_unet](02_unet/) | [README](02_unet/README.md) | компактная U-Net (482 тыс. параметров), переобучение до IoU 1.00 на train |
+| 3 | Дообучение | [D2L, Fine-Tuning](papers/03_fine_tuning.md) | [03-04_deeplab_finetune_pruning](03-04_deeplab_finetune_pruning/) | [REPORT_Fine-Tuning](03-04_deeplab_finetune_pruning/reports/REPORT_Fine-Tuning.md) | DeepLabV3-R50: голова 0.596 → вся модель 0.685 → CE + Lovász **0.695** mIoU test |
+| 4 | Прунинг | [DepGraph, Torch-Pruning](papers/04_depgraph.md) | там же | [REPORT_Pruning](03-04_deeplab_finetune_pruning/reports/REPORT_Pruning.md) | r = 0.3: ×1.7 быстрее при −0.014 mIoU; r = 0.5: ×2.8 при −0.038 |
+| 5 | Transformer encoder | [Vaswani et al., 2017](papers/05_transformer.md) | [05-06_transformer_vit](05-06_transformer_vit/) | [transformer_encoder](05-06_transformer_vit/report/transformer_encoder.md) | attention, совпадающий со встроенным, encoder-блок, стоимость O(N²) |
+| 6 | ViT | [Dosovitskiy et al., 2020](papers/06_vit.md) | там же | [vit](05-06_transformer_vit/report/vit.md) | patch embedding, учебный ViT, предобученный ViT-B/16, число токенов |
+| 7 | SegFormer | [Xie et al., 2021](papers/07_segformer.md) | [07-08_segformer_profiling](07-08_segformer_profiling/) | [README](07-08_segformer_profiling/README.md) | SegFormer-B0: **0.691** mIoU test при 3.7 млн параметров (в 10.7 раза меньше DeepLabV3) |
+| 8 | Профилирование и оптимизация | [PyTorch Profiler](papers/08_profiler.md) | там же | [PROFILING](07-08_segformer_profiling/PROFILING.md) | `fp16+compile`: SegFormer ×2.1, DeepLabV3 ×2.4 без потери mIoU |
+
+Конспекты статей в едином формате (проблема → предложение → устройство метода → ограничения)
+собраны в [papers/](papers/README.md).
 
 ## Сводная таблица моделей
 
