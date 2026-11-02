@@ -1,0 +1,11 @@
+torch>=2.0
+transformers>=4.41
+datasets>=2.14
+evaluate>=0.4
+accelerate>=0.26
+numpy
+pillow
+matplotlib
+scipy
+tqdm
+segmentation-models-pytorch>=0.3
