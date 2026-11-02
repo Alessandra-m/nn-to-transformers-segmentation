@@ -23,7 +23,6 @@
 │   └── pruning/
 ├── runs/                    # по папке на запуск: веса (не в git), summary.json, history.csv, analysis/
 │   └── results.csv          # сводная таблица (compare.py)
-├── data -> ../data          # CamVid (не в git)
 │
 ├── camvid.py                # датасет, классы, аугментации, DataLoader'ы
 ├── seg_utils.py             # модель, загрузка чекпоинтов, метрики
@@ -41,7 +40,7 @@
 └── prune.py                 #           прунинг с заданной долей каналов
 ```
 
-Данные — CamVid из [SegNet-Tutorial](https://github.com/alexgkendall/SegNet-Tutorial/tree/master/CamVid), в `data/CamVid/{train,val,test}` и `{train,val,test}annot`.
+Данные — общая для всего репозитория папка [`../data/CamVid`](../data/README.md) (`{train,val,test}` и `{train,val,test}annot`, разбиение 367 / 101 / 233). `camvid.py` читает оба формата масок: индексные с тем же именем файла (как в [SegNet-Tutorial](https://github.com/alexgkendall/SegNet-Tutorial/tree/master/CamVid), на них обучались модели) и RGB `<stem>_L.png` + `class_palette.csv` (как в [CamVid-for-Segmentation](https://github.com/stonewst/CamVid-for-Segmentation)). Разметка в обоих вариантах одна и та же: итоговая модель даёт на val одинаковый mIoU 0.776.
 
 ## Задача 1. Дообучение
 

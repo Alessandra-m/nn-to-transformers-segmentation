@@ -95,7 +95,7 @@ SegFormer-CamVid/
 ## 3. Данные (CamVid)
 
 Используется CamVid из [CamVid-for-Segmentation](https://github.com/stonewst/CamVid-for-Segmentation),
-путь задаётся в `config.py` → `DATA_ROOT`:
+общий для всего репозитория: [`../data/CamVid`](../data/README.md) (`config.py` → `DATA_ROOT`):
 
 ```
 CamVid/
@@ -300,7 +300,7 @@ IoU по классам на test:
 
 ```bash
 pip install -r requirements.txt
-# в config.py указать DATA_ROOT — путь к папке CamVid
+# данные — в ../data/CamVid (см. ../data/README.md)
 
 # 1. проверка препроцессинга (до обучения)
 python3 tests/test_mask_mapping.py
@@ -321,7 +321,7 @@ EXP=hires python3 train.py 2>&1 | tee logs/b0_cityscapes_512_e50.log
 EXP=hires python3 evaluate_model.py | tee logs/evaluate_hires.txt
 
 # 5. предсказание на одной картинке готовыми весами
-python3 predict.py <DATA_ROOT>/test/0001TP_008550.png pred.png --model weights/segformer-b0-camvid
+python3 predict.py ../data/CamVid/test/0001TP_008550.png pred.png --model weights/segformer-b0-camvid
 ```
 
 `evaluate_model.py` (позиционный аргумент) и `predict.py` (`--model`) принимают путь к любой

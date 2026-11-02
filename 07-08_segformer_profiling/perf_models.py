@@ -145,7 +145,7 @@ def add_model_args(ap):
     ap.add_argument("--segformer", type=Path, default=None,
                     help="SegFormer weights folder; default weights/segformer-b0-camvid, "
                          "falls back to config.OUTPUT_DIR")
-    ap.add_argument("--deeplab-repo", type=Path, default=C.PROJECT_DIR.parent / "Fine_Tuning_DeepLabV3_ResNet50",
+    ap.add_argument("--deeplab-repo", type=Path, default=C.PROJECT_DIR.parent / "03-04_deeplab_finetune_pruning",
                     help="DeepLabV3 project folder (provides seg_utils.py and camvid.py)")
     ap.add_argument("--deeplab-ckpt", type=Path, default=None,
                     help="default <deeplab-repo>/runs/full_ce_lovasz_e50/best.pt")

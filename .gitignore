@@ -1,0 +1,13 @@
+# датасет (скачивается отдельно, см. data/README.md)
+data/CamVid
+
+# веса и чекпоинты
+*.pt
+*.pth
+
+# python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/

@@ -2,7 +2,7 @@
 
 Сравнение скорости, памяти и узких мест двух моделей сегментации CamVid из этого проекта:
 итоговой SegFormer-B0 (`weights/segformer-b0-camvid`) и свёрточной DeepLabV3-ResNet50
-(`../Fine_Tuning_DeepLabV3_ResNet50/runs/full_ce_lovasz_e50/best.pt`).
+(`../03-04_deeplab_finetune_pruning/runs/full_ce_lovasz_e50/best.pt`).
 
 **Коротко.** На входе 360×480 SegFormer-B0 в fp32 в **5.2 раза быстрее** DeepLabV3
 (7.3 против 38.2 мс на кадр), при этом в 22 раза меньше по вычислениям (4.9 против 107.8 GMACs) и
@@ -266,7 +266,7 @@ SegFormer-B0 в лучшем режиме (6.3 мс) в 2.5 раза быстр�
   число запусков ядер. Поэтому прунинг нужно мерить в режиме `fp16+compile`, где накладные расходы
   на запуск убраны и видна чистая цена ядер.
 - Для сравнения, у DeepLabV3, который ограничен вычислениями, структурный прунинг в соседнем
-  проекте (`../Fine_Tuning_DeepLabV3_ResNet50`, тот же RTX 3050) работает почти пропорционально:
+  проекте (`../03-04_deeplab_finetune_pruning`, тот же RTX 3050) работает почти пропорционально:
   107.8 → 27.1 GMACs (×4) дают 38.2 → 13.8 мс (×2.8) ценой −0.038 mIoU на test.
 
 ---
@@ -343,7 +343,7 @@ with torch.inference_mode(), torch.autocast("cuda", dtype=torch.float16):
     logits = fast(pixel_values=x).logits
 ```
 
-Путь к проекту DeepLabV3 задаётся `--deeplab-repo` (по умолчанию `../Fine_Tuning_DeepLabV3_ResNet50`).
+Путь к проекту DeepLabV3 задаётся `--deeplab-repo` (по умолчанию `../03-04_deeplab_finetune_pruning`).
 
 **Ограничения.** Разбивка по частям модели через хуки сама добавляет запуски CUDA events; в
 launch-bound режимах SegFormer (fp16, half) она завышает время (сумма 9.5 мс при задержке 7.9 мс),

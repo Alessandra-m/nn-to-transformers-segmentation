@@ -3,7 +3,7 @@ from pathlib import Path
 
 PROJECT_DIR = Path(__file__).resolve().parent
 
-DATA_ROOT = Path("/home/magic/work_task/data/CamVid")
+DATA_ROOT = PROJECT_DIR.parent / "data" / "CamVid"
 SPLIT_DIRS = {
     "train": ("train", "trainannot"),
     "val": ("val", "valannot"),

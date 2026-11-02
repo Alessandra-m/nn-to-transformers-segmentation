@@ -7,7 +7,7 @@ from torchvision import tv_tensors
 from torchvision.io import ImageReadMode, read_image
 from torchvision.transforms import v2
 
-DATA_ROOT = "data/CamVid"
+DATA_ROOT = Path(__file__).resolve().parent.parent / "data" / "CamVid"
 
 CLASSES = ["Sky", "Building", "Pole", "Road", "Pavement", "Tree",
            "SignSymbol", "Fence", "Car", "Pedestrian", "Bicyclist"]
@@ -52,16 +52,33 @@ class CamVid(Dataset):
         self.images = sorted((root / split).glob("*.png"))
         self.masks = sorted((root / f"{split}annot").glob("*.png"))
         assert len(self.images) > 0, f"нет изображений в {root / split}"
-        assert [p.name for p in self.images] == [p.name for p in self.masks], \
+        # маски: индексы классов с тем же именем (SegNet-Tutorial) или RGB-цвета с суффиксом _L
+        names = [p.name.replace("_L.png", ".png") for p in self.masks]
+        assert [p.name for p in self.images] == names, \
             f"{split}: имена картинок и масок не совпадают"
+        self.colors = None
+        if (root / "class_palette.csv").exists():
+            rows = np.loadtxt(root / "class_palette.csv", delimiter=",", skiprows=1,
+                              usecols=(1, 2, 3), dtype=np.int64)[:NUM_CLASSES]
+            self.colors = torch.from_numpy((rows[:, 0] << 16) | (rows[:, 1] << 8) | rows[:, 2])
         self.transforms = transforms
+
+    def read_mask(self, path):
+        m = read_image(str(path), ImageReadMode.UNCHANGED)
+        if m.shape[0] == 1:
+            return m[0]
+        code = (m[0].long() << 16) | (m[1].long() << 8) | m[2].long()
+        mask = torch.full(code.shape, IGNORE_INDEX, dtype=torch.uint8)
+        for i, c in enumerate(self.colors):
+            mask[code == c] = i
+        return mask
 
     def __len__(self):
         return len(self.images)
 
     def __getitem__(self, i):
         img = tv_tensors.Image(read_image(str(self.images[i]), ImageReadMode.RGB))
-        mask = tv_tensors.Mask(read_image(str(self.masks[i]), ImageReadMode.GRAY)[0])
+        mask = tv_tensors.Mask(self.read_mask(self.masks[i]))
         if self.transforms is not None:
             img, mask = self.transforms(img, mask)
         return img, mask
