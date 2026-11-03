@@ -18,6 +18,7 @@
 | 7 | SegFormer | [Xie et al., 2021](papers/07_segformer.md) | [07-08_segformer_profiling](07-08_segformer_profiling/) | [README](07-08_segformer_profiling/README.md) | SegFormer-B0: **0.691** mIoU test при 3.7 млн параметров (в 10.7 раза меньше DeepLabV3) |
 | 8 | Профилирование и оптимизация | [PyTorch Profiler](papers/08_profiler.md) | [07-08_segformer_profiling](07-08_segformer_profiling/) | [PROFILING](07-08_segformer_profiling/PROFILING.md) | `fp16+compile`: SegFormer ×2.1, DeepLabV3 ×2.4 без потери mIoU |
 
+Общий отчёт по работе — [REPORT.md](REPORT.md).
 Конспекты статей в едином формате (проблема → предложение → устройство метода → ограничения)
 собраны в [papers/](papers/README.md).
 
